@@ -14,7 +14,7 @@ namespace Laba1
     {
         public string InputFileName = "";
         public string OutputFileName = "";
-
+        int rad;
 
         public Form1()
         {
@@ -40,7 +40,6 @@ namespace Laba1
             if (!IsStart)
             {
                 IsStart = !IsStart;
-                startStop.Text = "Stop";
                 FinalFrame = new VideoCaptureDevice(CaptureDevice[comboBox1.SelectedIndex].MonikerString);
                 FinalFrame.NewFrame += new NewFrameEventHandler(FinalFrame_NewFrame);
                 FinalFrame.Start();
@@ -48,7 +47,6 @@ namespace Laba1
             else
             {
                 IsStart = !IsStart;
-                startStop.Text = "Start";
                 FinalFrame.Stop();
             }
         }
@@ -64,19 +62,35 @@ namespace Laba1
         {
             if (pictureBox1.Image != null)
             {
-                SaveFileDialog save = new SaveFileDialog();
-                save.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
-                save.Title = "Save file .bmp";
-                save.DefaultExt = ".bmp";
-                save.Filter = "File BMP|*.bmp";
-                save.ShowDialog();
-                OutputFileName = save.FileName;
-                pictureBox1.Image.Save(OutputFileName, ImageFormat.Bmp);
-                MessageBox.Show("Image saved successfully");
+                SavePicture();
             }
-            else MessageBox.Show("File not found!");
+            else MessageBox.Show("Picture not found!");
         }
-        private void toTxt_Click(object sender, EventArgs e)
+
+        private void OpenFile_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.Filter = "Bitmap Image|*.bmp|Gif Image|*.gif|Png Image|*.png|JPeg Image|*.jpg";
+            openFileDialog1.Title = "Choose an Image File";
+
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                pictureBox1.Image = Image.FromFile(@openFileDialog1.FileName);
+            }
+        }
+
+        private void SavePicture()
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
+            save.Title = "Save file .bmp";
+            save.DefaultExt = ".bmp";
+            save.Filter = "File BMP|*.bmp";
+            save.ShowDialog();
+            OutputFileName = save.FileName;
+            pictureBox1.Image.Save(OutputFileName, ImageFormat.Bmp);
+
+        }
+        private void OpenTxtDialog()
         {
             OpenFileDialog open = new OpenFileDialog();
             open.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
@@ -85,24 +99,10 @@ namespace Laba1
             open.DefaultExt = ".txt";
             open.Filter = "File TXT|*.txt";
             open.FilterIndex = 0;
-
             open.ShowDialog();
-
             InputFileName = open.FileName;
-
-            SaveFileDialog save = new SaveFileDialog();
-            save.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
-            save.Title = "Save file .bmp";
-            save.DefaultExt = ".bmp";
-            save.Filter = "File BMP|*.bmp";
-            save.ShowDialog();
-
-            OutputFileName = save.FileName;
-            TxtToBmp();
-            Image image = Image.FromFile(OutputFileName);
-            pictureBox1.Image = image;
         }
-        private void toBmp_Click(object sender, EventArgs e)
+        private void OpenBmpDialog()
         {
             OpenFileDialog open = new OpenFileDialog();
             open.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
@@ -111,19 +111,43 @@ namespace Laba1
             open.DefaultExt = ".bmp";
             open.Filter = "File BMP|*.bmp";
             open.FilterIndex = 0;
-
             open.ShowDialog();
-
             InputFileName = open.FileName;
 
+        }
+        private void SaveBmpDialog()
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
+            save.Title = "Save file .bmp";
+            save.DefaultExt = ".bmp";
+            save.Filter = "File BMP|*.bmp";
+            save.ShowDialog();
+
+            OutputFileName = save.FileName;
+        }
+        private void SaveTxtDialog()
+        {
             SaveFileDialog save = new SaveFileDialog();
             save.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
             save.Title = "Save file .txt";
             save.DefaultExt = ".txt";
             save.Filter = "File TXT|*.txt";
             save.ShowDialog();
-
             OutputFileName = save.FileName;
+        }
+        private void toTxt_Click(object sender, EventArgs e)
+        {
+            OpenTxtDialog();
+            SaveBmpDialog();
+            TxtToBmp();
+            Image image = Image.FromFile(OutputFileName);
+            pictureBox1.Image = image;
+        }
+        private void toBmp_Click(object sender, EventArgs e)
+        {
+            OpenBmpDialog();
+            SaveTxtDialog();
             Image image = Image.FromFile(InputFileName);
             pictureBox1.Image = image;
             BmpToTxt(pictureBox1.Image);
@@ -152,7 +176,7 @@ namespace Laba1
                             sw.WriteLine(stringPartOfColor);
                         }
                     }
-                    sw.Close(); 
+                    sw.Close();
                 }
             }
             Cursor = Cursors.Default;
@@ -187,32 +211,118 @@ namespace Laba1
             Cursor = Cursors.Default;
 
         }
+
         private void MedianFiltering_Click(object sender, EventArgs e)
         {
-            OpenFileDialog open = new OpenFileDialog();
-            open.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
-            open.Title = "Select a file .BMP";
-            open.Multiselect = false;
-            open.DefaultExt = ".bmp";
-            open.Filter = "File BMP|*.bmp";
-            open.FilterIndex = 0;
+            if (pictureBox1.Image != null)
+            {
 
-            open.ShowDialog();
+                Bitmap my_bitmap = (Bitmap)pictureBox1.Image;
+                int w_b = my_bitmap.Width;
+                int h_b = my_bitmap.Height;
 
-            InputFileName = open.FileName;
+                toolStripProgressBar1.Step = 1;
+                toolStripProgressBar1.Maximum = w_b * h_b;
+                try
+                {
+                    rad = System.Convert.ToInt32(toolStripTextBox1.Text);
+                }
+                catch
+                {
+                    rad = 1;
+                }
 
-            SaveFileDialog save = new SaveFileDialog();
-            save.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
-            save.Title = "Save file .BMP";
-            save.DefaultExt = ".bmp";
-            save.Filter = "File BMP|*.bmp";
-            save.ShowDialog();
+                for (int x = rad + 1; x < w_b - rad; x++)
+                {
+                    for (int y = rad + 1; y < h_b - rad; y++)
+                    {
+                        median_filter(my_bitmap, x, y);
+                        toolStripProgressBar1.PerformStep();
 
-            OutputFileName = save.FileName;
-            Image image = Image.FromFile(InputFileName);
-            Bitmap bmp = new Bitmap(image);
-            pictureBox1.Image = bmp;
+                    }
+
+                }
+                pictureBox1.Refresh();
+                toolStripProgressBar1.Value = 0;
+            }
+            else MessageBox.Show("Picture not found!");
+        }
+        private void median_filter(Bitmap my_bitmap, int x, int y)
+        {
+            int n;
+            int cR_, cB_, cG_;
+            int k = 1;
+
+            n = (2 * rad + 1) * (2 * rad + 1);
+            int[] cR = new int[n + 1];
+            int[] cB = new int[n + 1];
+            int[] cG = new int[n + 1];
+
+            for (int i = 0; i < n + 1; i++)
+            {
+                cR[i] = 0;
+                cG[i] = 0;
+                cB[i] = 0;
+            }
+
+            int w_b = my_bitmap.Width;
+            int h_b = my_bitmap.Height;
+
+            for (int i = x - rad; i < x + rad + 1; i++)
+            {
+                for (int j = y - rad; j < y + rad + 1; j++)
+                {
+
+                    System.Drawing.Color c = my_bitmap.GetPixel(i, j);
+                    cR[k] = System.Convert.ToInt32(c.R);
+                    cG[k] = System.Convert.ToInt32(c.G);
+                    cB[k] = System.Convert.ToInt32(c.B);
+                    k++;
+                }
+            }
+
+            quicksort(cR, 0, n - 1);
+            quicksort(cG, 0, n - 1);
+            quicksort(cB, 0, n - 1);
+
+            int n_ = (int)(n / 2) + 1;
+
+            cR_ = cR[n_];
+            cG_ = cG[n_];
+            cB_ = cB[n_];
+
+            my_bitmap.SetPixel(x, y, System.Drawing.Color.FromArgb(cR_, cG_, cB_));
+        }
+        private int partition(int[] a, int p, int r)
+        {
+            int x = a[r];
+            int i = p - 1;
+            int tmp;
+            for (int j = p; j < r; j++)
+            {
+                if (a[j] <= x)
+                {
+                    i++;
+                    tmp = a[i];
+                    a[i] = a[j];
+                    a[j] = tmp;
+                }
+            }
+            tmp = a[r];
+            a[r] = a[i + 1];
+            a[i + 1] = tmp;
+            return (i + 1);
 
         }
+        private void quicksort(int[] a, int p, int r)
+        {
+            if (p < r)
+            {
+                int q = partition(a, p, r);
+                quicksort(a, p, q - 1);
+                quicksort(a, q + 1, r);
+            }
+        }
+
     }
 }
