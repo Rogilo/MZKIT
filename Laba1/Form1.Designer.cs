@@ -42,13 +42,15 @@
             this.tobmpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.filterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.useMedianFilterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.linearContrastingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
             this.menuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -135,21 +137,22 @@
             // totxtToolStripMenuItem
             // 
             this.totxtToolStripMenuItem.Name = "totxtToolStripMenuItem";
-            this.totxtToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.totxtToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
             this.totxtToolStripMenuItem.Text = "From .txt to .bmp";
             this.totxtToolStripMenuItem.Click += new System.EventHandler(this.toTxt_Click);
             // 
             // tobmpToolStripMenuItem
             // 
             this.tobmpToolStripMenuItem.Name = "tobmpToolStripMenuItem";
-            this.tobmpToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.tobmpToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
             this.tobmpToolStripMenuItem.Text = "From .bmp to .txt";
             this.tobmpToolStripMenuItem.Click += new System.EventHandler(this.toBmp_Click);
             // 
             // filterToolStripMenuItem
             // 
             this.filterToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.useMedianFilterToolStripMenuItem});
+            this.useMedianFilterToolStripMenuItem,
+            this.linearContrastingToolStripMenuItem});
             this.filterToolStripMenuItem.Name = "filterToolStripMenuItem";
             this.filterToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.filterToolStripMenuItem.Text = "Filter";
@@ -160,8 +163,14 @@
             this.toolStripTextBox1});
             this.useMedianFilterToolStripMenuItem.Name = "useMedianFilterToolStripMenuItem";
             this.useMedianFilterToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.useMedianFilterToolStripMenuItem.Text = "Use median filter";
+            this.useMedianFilterToolStripMenuItem.Text = "Median filter";
             this.useMedianFilterToolStripMenuItem.Click += new System.EventHandler(this.MedianFiltering_Click);
+            // 
+            // toolStripTextBox1
+            // 
+            this.toolStripTextBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toolStripTextBox1.Name = "toolStripTextBox1";
+            this.toolStripTextBox1.Size = new System.Drawing.Size(100, 27);
             // 
             // menuStrip2
             // 
@@ -213,10 +222,20 @@
             this.toolStrip1.TabIndex = 15;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripTextBox1
+            // linearContrastingToolStripMenuItem
             // 
-            this.toolStripTextBox1.Name = "toolStripTextBox1";
-            this.toolStripTextBox1.Size = new System.Drawing.Size(100, 27);
+            this.linearContrastingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripTextBox2});
+            this.linearContrastingToolStripMenuItem.Name = "linearContrastingToolStripMenuItem";
+            this.linearContrastingToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.linearContrastingToolStripMenuItem.Text = "Linear Contrasting";
+            this.linearContrastingToolStripMenuItem.Click += new System.EventHandler(this.LinearContrasting_Click);
+            // 
+            // toolStripTextBox2
+            // 
+            this.toolStripTextBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toolStripTextBox2.Name = "toolStripTextBox2";
+            this.toolStripTextBox2.Size = new System.Drawing.Size(100, 27);
             // 
             // Form1
             // 
@@ -264,6 +283,8 @@
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
+        private System.Windows.Forms.ToolStripMenuItem linearContrastingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBox2;
     }
 }
 

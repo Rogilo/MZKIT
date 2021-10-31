@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
+using AForge.Imaging.Filters;
 using AForge.Video;
 using AForge.Video.DirectShow;
 
@@ -15,7 +16,7 @@ namespace Laba1
         public string InputFileName = "";
         public string OutputFileName = "";
         int rad;
-
+        float brightness;
         public Form1()
         {
             InitializeComponent();
@@ -236,7 +237,7 @@ namespace Laba1
                 {
                     for (int y = rad + 1; y < h_b - rad; y++)
                     {
-                        median_filter(my_bitmap, x, y);
+                        Median_filter(my_bitmap, x, y);
                         toolStripProgressBar1.PerformStep();
 
                     }
@@ -247,7 +248,24 @@ namespace Laba1
             }
             else MessageBox.Show("Picture not found!");
         }
-        private void median_filter(Bitmap my_bitmap, int x, int y)
+        private void LinearContrasting_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                try
+                {
+                    brightness = System.Convert.ToInt32(toolStripTextBox2.Text);
+                }
+                catch
+                {
+                    brightness = 1;
+                }
+                Bitmap my_bitmap = (Bitmap)pictureBox1.Image;
+                pictureBox1.Image = LinearContrasting(my_bitmap);
+            }
+            else MessageBox.Show("Picture not found!");
+        }
+        private void Median_filter(Bitmap my_bitmap, int x, int y)
         {
             int n;
             int cR_, cB_, cG_;
@@ -281,9 +299,9 @@ namespace Laba1
                 }
             }
 
-            quicksort(cR, 0, n - 1);
-            quicksort(cG, 0, n - 1);
-            quicksort(cB, 0, n - 1);
+            Quicksort(cR, 0, n - 1);
+            Quicksort(cG, 0, n - 1);
+            Quicksort(cB, 0, n - 1);
 
             int n_ = (int)(n / 2) + 1;
 
@@ -293,7 +311,7 @@ namespace Laba1
 
             my_bitmap.SetPixel(x, y, System.Drawing.Color.FromArgb(cR_, cG_, cB_));
         }
-        private int partition(int[] a, int p, int r)
+        private int Partition(int[] a, int p, int r)
         {
             int x = a[r];
             int i = p - 1;
@@ -314,15 +332,41 @@ namespace Laba1
             return (i + 1);
 
         }
-        private void quicksort(int[] a, int p, int r)
+        private void Quicksort(int[] a, int p, int r)
         {
             if (p < r)
             {
-                int q = partition(a, p, r);
-                quicksort(a, p, q - 1);
-                quicksort(a, q + 1, r);
+                int q = Partition(a, p, r);
+                Quicksort(a, p, q - 1);
+                Quicksort(a, q + 1, r);
             }
         }
+        private Image LinearContrasting(Bitmap image) 
+        {
+            ImageAttributes imageAttributes = new ImageAttributes();
+            int width = image.Width;
+            int height = image.Height;
 
+            float[][] colorMatrixElements = {
+            new float[] {brightness, 0, 0, 0, 0},
+            new float[] {0, brightness, 0, 0, 0},
+            new float[] {0, 0, brightness, 0, 0},
+            new float[] {0, 0, 0, 1, 0},
+            new float[] {0, 0, 0, 0, 1}
+            };
+            ColorMatrix colorMatrix = new ColorMatrix(colorMatrixElements);
+
+            imageAttributes.SetColorMatrix(
+                colorMatrix,
+                ColorMatrixFlag.Default,
+                ColorAdjustType.Bitmap);
+            Graphics graphics = Graphics.FromImage(image);
+            graphics.DrawImage(image, new Rectangle(0, 0, width, height), 0, 0, width,
+                height,
+                GraphicsUnit.Pixel,
+                imageAttributes);
+            return image;
+        }
+     
     }
 }
