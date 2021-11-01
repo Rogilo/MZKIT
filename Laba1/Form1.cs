@@ -110,7 +110,7 @@ namespace Laba1
             open.Title = "Select a file .BMP";
             open.Multiselect = false;
             open.DefaultExt = ".bmp";
-            open.Filter = "File BMP|*.bmp";
+            open.Filter = "Bitmap Image|*.bmp|Gif Image|*.gif|Png Image|*.png|JPeg Image|*.jpg";
             open.FilterIndex = 0;
             open.ShowDialog();
             InputFileName = open.FileName;
@@ -265,6 +265,17 @@ namespace Laba1
             }
             else MessageBox.Show("Picture not found!");
         }
+        private void Imposition_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                OpenBmpDialog();
+                Bitmap OverlayBitmap = (Bitmap)Bitmap.FromFile(InputFileName);
+                Bitmap TargetBitmap = (Bitmap)pictureBox1.Image;
+                pictureBox1.Image = Imposition(TargetBitmap, OverlayBitmap);
+            }
+            else MessageBox.Show("Picture not found!");
+        }
         private void Median_filter(Bitmap my_bitmap, int x, int y)
         {
             int n;
@@ -367,6 +378,17 @@ namespace Laba1
                 imageAttributes);
             return image;
         }
-     
+        private Image Imposition(Bitmap TargetBitmap, Bitmap OverlayBitmap) 
+        {
+            Bitmap ResultBitmap = new Bitmap(TargetBitmap.Width, TargetBitmap.Height,PixelFormat.Format32bppArgb);
+            Graphics graph = Graphics.FromImage(ResultBitmap);
+            graph.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
+            graph.DrawImage(TargetBitmap, 0, 0);
+            graph.DrawImage(OverlayBitmap, (TargetBitmap.Width - OverlayBitmap.Width) / 2,
+                (TargetBitmap.Height - OverlayBitmap.Height) / 2,OverlayBitmap.Width, OverlayBitmap.Height);
+            return ResultBitmap;
+        }
+
+
     }
 }

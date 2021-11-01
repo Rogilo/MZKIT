@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.902
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Laba1", "Laba1\Laba1.csproj", "{409745D5-F1E5-4FAE-AE18-6A728AF77D84}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MZKIT_Project", "Laba1\MZKIT_Project.csproj", "{409745D5-F1E5-4FAE-AE18-6A728AF77D84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
