@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,9 +60,12 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.parallelTransferToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -211,7 +215,8 @@
             // 
             this.transformationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.scaleToolStripMenuItem,
-            this.rotateToolStripMenuItem});
+            this.rotateToolStripMenuItem,
+            this.parallelTransferToolStripMenuItem});
             this.transformationToolStripMenuItem.Name = "transformationToolStripMenuItem";
             this.transformationToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.transformationToolStripMenuItem.Text = "Transformation ";
@@ -253,7 +258,7 @@
             this.widthToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripTextBox3});
             this.widthToolStripMenuItem.Name = "widthToolStripMenuItem";
-            this.widthToolStripMenuItem.Size = new System.Drawing.Size(137, 26);
+            this.widthToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.widthToolStripMenuItem.Text = "Width";
             // 
             // toolStripTextBox3
@@ -268,7 +273,7 @@
             this.heightToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripTextBox4});
             this.heightToolStripMenuItem.Name = "heightToolStripMenuItem";
-            this.heightToolStripMenuItem.Size = new System.Drawing.Size(137, 26);
+            this.heightToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.heightToolStripMenuItem.Text = "Height";
             // 
             // toolStripTextBox4
@@ -313,6 +318,17 @@
             this.pictureBox2.Size = new System.Drawing.Size(847, 399);
             this.pictureBox2.TabIndex = 16;
             this.pictureBox2.TabStop = false;
+            this.pictureBox2.Paint += new System.Windows.Forms.PaintEventHandler(this.pbImage_Paint);
+            this.pictureBox2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pbImage_MouseDown);
+            this.pictureBox2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbImage_MouseMove);
+            this.pictureBox2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pbImage_MouseUp);
+            // 
+            // parallelTransferToolStripMenuItem
+            // 
+            this.parallelTransferToolStripMenuItem.Name = "parallelTransferToolStripMenuItem";
+            this.parallelTransferToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.parallelTransferToolStripMenuItem.Text = "Parallel Transfer";
+            this.parallelTransferToolStripMenuItem.Click += new System.EventHandler(this.ParalelTransformation_Click);
             // 
             // Form1
             // 
@@ -334,6 +350,7 @@
             this.menuStrip2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -371,6 +388,8 @@
         private System.Windows.Forms.ToolStripMenuItem scaleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rotateToolStripMenuItem;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox5;
+        private System.Windows.Forms.ToolStripMenuItem parallelTransferToolStripMenuItem;
+        private System.Windows.Forms.BindingSource bindingSource1;
     }
 }
 

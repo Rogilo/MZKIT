@@ -19,6 +19,9 @@ namespace Laba1
         float brightness;
         int w_b;
         int h_b;
+        private Point mousePos1;
+        private Point mousePos2;
+        private DraggedFragment draggedFragment;
         public Form1()
         {
             InitializeComponent();
@@ -26,6 +29,97 @@ namespace Laba1
         private FilterInfoCollection CaptureDevice;
         private VideoCaptureDevice FinalFrame;
         private bool IsStart = false;
+
+        private void pbImage_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                //юзер тянет фрагмент?
+                if (draggedFragment != null)
+                {
+                    //сдвигаем фрагмент
+                    draggedFragment.Location.Offset(e.Location.X - mousePos2.X, e.Location.Y - mousePos2.Y);
+                    mousePos1 = e.Location;
+                }
+                //сдвигаем выделенную область
+                mousePos2 = e.Location;
+                pictureBox2.Invalidate();
+            }
+            else
+            {
+                mousePos1 = mousePos2 = e.Location;
+            }
+        }
+
+        private void pbImage_MouseDown(object sender, MouseEventArgs e)
+        {
+            //юзер кликнул мышью мимо фрагмента?
+            if (draggedFragment != null && !draggedFragment.Rect.Contains(e.Location))
+            {
+                //уничтожаем фрагмент
+                draggedFragment = null;
+                pictureBox2.Invalidate();
+            }
+        }
+
+        private void pbImage_MouseUp(object sender, MouseEventArgs e)
+        {
+            //пользователь выделил фрагмент и отпустил мышь?
+            if (mousePos1 != mousePos2)
+            {
+                //создаем DraggedFragment
+                var rect = GetRect(mousePos1, mousePos2);
+                draggedFragment = new DraggedFragment() { SourceRect = rect, Location = rect.Location };
+            }
+            else
+            {
+                //пользователь сдвинул фрагмент и отпутил мышь?
+                if (draggedFragment != null)
+                {
+                    //фиксируем изменения в исходном изображении
+                    draggedFragment.Fix(pictureBox2.Image);
+                    //уничтожаем фрагмент
+                    draggedFragment = null;
+                    mousePos1 = mousePos2 = e.Location;
+                }
+            }
+            pictureBox2.Invalidate();
+        }
+
+        private void pbImage_Paint(object sender, PaintEventArgs e)
+        {
+            //если есть сдвигаемый фрагмент
+            if (draggedFragment != null)
+            {
+                //рисуем выеразанное белое место
+                e.Graphics.SetClip(draggedFragment.SourceRect);
+                e.Graphics.Clear(Color.White);
+
+                //рисуем сдвинутый фрагмент
+                e.Graphics.SetClip(draggedFragment.Rect);
+                e.Graphics.DrawImage(pictureBox2.Image, draggedFragment.Location.X - draggedFragment.SourceRect.X, draggedFragment.Location.Y - draggedFragment.SourceRect.Y);
+
+                //рисуем рамку
+                e.Graphics.ResetClip();
+                ControlPaint.DrawFocusRectangle(e.Graphics, draggedFragment.Rect);
+            }
+            else
+            {
+                //если выделена область
+                if (mousePos1 != mousePos2)
+                    ControlPaint.DrawFocusRectangle(e.Graphics, GetRect(mousePos1, mousePos2));//рисуем рамку
+            }
+        }
+
+        //получение Rectangle из двух точек
+        Rectangle GetRect(Point p1, Point p2)
+        {
+            var x1 = Math.Min(p1.X, p2.X);
+            var x2 = Math.Max(p1.X, p2.X);
+            var y1 = Math.Min(p1.Y, p2.Y);
+            var y2 = Math.Max(p1.Y, p2.Y);
+            return new Rectangle(x1, y1, x2 - x1, y2 - y1);
+        }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -57,6 +151,10 @@ namespace Laba1
             }
             comboBox1.SelectedIndex = 0;
             FinalFrame = new VideoCaptureDevice();
+        }
+        private void ParalelTransformation_Click(object sender, EventArgs e)
+        {
+            pictureBox2.Image = pictureBox1.Image;
         }
         private void startStop_Click(object sender, EventArgs e)
         {
@@ -188,7 +286,7 @@ namespace Laba1
                     h_b = 399;
                 }
                 Bitmap my_bitmap = (Bitmap)pictureBox1.Image;
-                pictureBox2.Image = ResizeImage(my_bitmap,w_b,h_b);
+                pictureBox2.Image = ResizeImage(my_bitmap, w_b, h_b);
             }
             else MessageBox.Show("Picture not found!");
         }
@@ -442,7 +540,7 @@ namespace Laba1
                 Quicksort(a, q + 1, r);
             }
         }
-        private Image LinearContrasting(Bitmap image) 
+        private Image LinearContrasting(Bitmap image)
         {
             ImageAttributes imageAttributes = new ImageAttributes();
             int width = image.Width;
@@ -468,16 +566,17 @@ namespace Laba1
                 imageAttributes);
             return image;
         }
-        private Image Imposition(Bitmap TargetBitmap, Bitmap OverlayBitmap) 
+        private Image Imposition(Bitmap TargetBitmap, Bitmap OverlayBitmap)
         {
-            Bitmap ResultBitmap = new Bitmap(TargetBitmap.Width, TargetBitmap.Height,PixelFormat.Format32bppArgb);
+            Bitmap ResultBitmap = new Bitmap(TargetBitmap.Width, TargetBitmap.Height, PixelFormat.Format32bppArgb);
             Graphics graph = Graphics.FromImage(ResultBitmap);
             graph.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
             graph.DrawImage(TargetBitmap, 0, 0);
             graph.DrawImage(OverlayBitmap, (TargetBitmap.Width - OverlayBitmap.Width) / 2,
-                (TargetBitmap.Height - OverlayBitmap.Height) / 2,OverlayBitmap.Width, OverlayBitmap.Height);
+                (TargetBitmap.Height - OverlayBitmap.Height) / 2, OverlayBitmap.Width, OverlayBitmap.Height);
             return ResultBitmap;
         }
-    }
 
+
+    }
 }
