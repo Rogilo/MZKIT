@@ -48,9 +48,9 @@
             this.toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
             this.impositionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.transformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.scaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rotateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripTextBox5 = new System.Windows.Forms.ToolStripTextBox();
+            this.parallelTransferToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.normalizationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.widthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripTextBox3 = new System.Windows.Forms.ToolStripTextBox();
@@ -60,7 +60,6 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.parallelTransferToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.menuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -151,14 +150,14 @@
             // totxtToolStripMenuItem
             // 
             this.totxtToolStripMenuItem.Name = "totxtToolStripMenuItem";
-            this.totxtToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
+            this.totxtToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.totxtToolStripMenuItem.Text = "From .txt to .bmp";
             this.totxtToolStripMenuItem.Click += new System.EventHandler(this.toTxt_Click);
             // 
             // tobmpToolStripMenuItem
             // 
             this.tobmpToolStripMenuItem.Name = "tobmpToolStripMenuItem";
-            this.tobmpToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
+            this.tobmpToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.tobmpToolStripMenuItem.Text = "From .bmp to .txt";
             this.tobmpToolStripMenuItem.Click += new System.EventHandler(this.toBmp_Click);
             // 
@@ -177,7 +176,7 @@
             this.useMedianFilterToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripTextBox1});
             this.useMedianFilterToolStripMenuItem.Name = "useMedianFilterToolStripMenuItem";
-            this.useMedianFilterToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
+            this.useMedianFilterToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.useMedianFilterToolStripMenuItem.Text = "Median filter";
             this.useMedianFilterToolStripMenuItem.Click += new System.EventHandler(this.MedianFiltering_Click);
             // 
@@ -193,7 +192,7 @@
             this.linearContrastingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripTextBox2});
             this.linearContrastingToolStripMenuItem.Name = "linearContrastingToolStripMenuItem";
-            this.linearContrastingToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
+            this.linearContrastingToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.linearContrastingToolStripMenuItem.Text = "Linear Contrasting";
             this.linearContrastingToolStripMenuItem.Click += new System.EventHandler(this.LinearContrasting_Click);
             // 
@@ -207,25 +206,18 @@
             // impositionToolStripMenuItem
             // 
             this.impositionToolStripMenuItem.Name = "impositionToolStripMenuItem";
-            this.impositionToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
+            this.impositionToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.impositionToolStripMenuItem.Text = "Imposition";
             this.impositionToolStripMenuItem.Click += new System.EventHandler(this.Imposition_Click);
             // 
             // transformationToolStripMenuItem
             // 
             this.transformationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.scaleToolStripMenuItem,
             this.rotateToolStripMenuItem,
             this.parallelTransferToolStripMenuItem});
             this.transformationToolStripMenuItem.Name = "transformationToolStripMenuItem";
             this.transformationToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.transformationToolStripMenuItem.Text = "Transformation ";
-            // 
-            // scaleToolStripMenuItem
-            // 
-            this.scaleToolStripMenuItem.Name = "scaleToolStripMenuItem";
-            this.scaleToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.scaleToolStripMenuItem.Text = "Scale";
             // 
             // rotateToolStripMenuItem
             // 
@@ -242,6 +234,13 @@
             this.toolStripTextBox5.Name = "toolStripTextBox5";
             this.toolStripTextBox5.Size = new System.Drawing.Size(100, 27);
             this.toolStripTextBox5.Text = "90";
+            // 
+            // parallelTransferToolStripMenuItem
+            // 
+            this.parallelTransferToolStripMenuItem.Name = "parallelTransferToolStripMenuItem";
+            this.parallelTransferToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.parallelTransferToolStripMenuItem.Text = "Parallel Transfer";
+            this.parallelTransferToolStripMenuItem.Click += new System.EventHandler(this.ParalelTransformation_Click);
             // 
             // normalizationToolStripMenuItem
             // 
@@ -323,13 +322,6 @@
             this.pictureBox2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pbImage_MouseMove);
             this.pictureBox2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pbImage_MouseUp);
             // 
-            // parallelTransferToolStripMenuItem
-            // 
-            this.parallelTransferToolStripMenuItem.Name = "parallelTransferToolStripMenuItem";
-            this.parallelTransferToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.parallelTransferToolStripMenuItem.Text = "Parallel Transfer";
-            this.parallelTransferToolStripMenuItem.Click += new System.EventHandler(this.ParalelTransformation_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -385,7 +377,6 @@
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox3;
         private System.Windows.Forms.ToolStripMenuItem heightToolStripMenuItem;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox4;
-        private System.Windows.Forms.ToolStripMenuItem scaleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rotateToolStripMenuItem;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox5;
         private System.Windows.Forms.ToolStripMenuItem parallelTransferToolStripMenuItem;

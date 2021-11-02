@@ -50,7 +50,6 @@ namespace Laba1
                 mousePos1 = mousePos2 = e.Location;
             }
         }
-
         private void pbImage_MouseDown(object sender, MouseEventArgs e)
         {
             //юзер кликнул мышью мимо фрагмента?
@@ -61,7 +60,6 @@ namespace Laba1
                 pictureBox2.Invalidate();
             }
         }
-
         private void pbImage_MouseUp(object sender, MouseEventArgs e)
         {
             //пользователь выделил фрагмент и отпустил мышь?
@@ -85,7 +83,6 @@ namespace Laba1
             }
             pictureBox2.Invalidate();
         }
-
         private void pbImage_Paint(object sender, PaintEventArgs e)
         {
             //если есть сдвигаемый фрагмент
@@ -111,7 +108,6 @@ namespace Laba1
             }
         }
 
-        //получение Rectangle из двух точек
         Rectangle GetRect(Point p1, Point p2)
         {
             var x1 = Math.Min(p1.X, p2.X);
@@ -120,7 +116,6 @@ namespace Laba1
             var y2 = Math.Max(p1.Y, p2.Y);
             return new Rectangle(x1, y1, x2 - x1, y2 - y1);
         }
-
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             DialogResult dialog = MessageBox.Show(
@@ -365,7 +360,6 @@ namespace Laba1
             save.ShowDialog();
             OutputFileName = save.FileName;
         }
-
         private Bitmap RotateImage(Image sourceImage, int rad)
         {
             var rotateImage = new Bitmap(sourceImage.Width, sourceImage.Height);
