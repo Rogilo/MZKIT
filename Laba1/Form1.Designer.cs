@@ -46,17 +46,22 @@
             this.linearContrastingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
             this.impositionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.transformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rotateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripTextBox5 = new System.Windows.Forms.ToolStripTextBox();
+            this.normalizationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.widthToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripTextBox3 = new System.Windows.Forms.ToolStripTextBox();
+            this.heightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripTextBox4 = new System.Windows.Forms.ToolStripTextBox();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.transformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.normalizationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.menuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -177,6 +182,7 @@
             this.toolStripTextBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBox1.Name = "toolStripTextBox1";
             this.toolStripTextBox1.Size = new System.Drawing.Size(100, 27);
+            this.toolStripTextBox1.Text = "1";
             // 
             // linearContrastingToolStripMenuItem
             // 
@@ -192,6 +198,7 @@
             this.toolStripTextBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBox2.Name = "toolStripTextBox2";
             this.toolStripTextBox2.Size = new System.Drawing.Size(100, 27);
+            this.toolStripTextBox2.Text = "1";
             // 
             // impositionToolStripMenuItem
             // 
@@ -199,6 +206,77 @@
             this.impositionToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
             this.impositionToolStripMenuItem.Text = "Imposition";
             this.impositionToolStripMenuItem.Click += new System.EventHandler(this.Imposition_Click);
+            // 
+            // transformationToolStripMenuItem
+            // 
+            this.transformationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.scaleToolStripMenuItem,
+            this.rotateToolStripMenuItem});
+            this.transformationToolStripMenuItem.Name = "transformationToolStripMenuItem";
+            this.transformationToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.transformationToolStripMenuItem.Text = "Transformation ";
+            // 
+            // scaleToolStripMenuItem
+            // 
+            this.scaleToolStripMenuItem.Name = "scaleToolStripMenuItem";
+            this.scaleToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.scaleToolStripMenuItem.Text = "Scale";
+            // 
+            // rotateToolStripMenuItem
+            // 
+            this.rotateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripTextBox5});
+            this.rotateToolStripMenuItem.Name = "rotateToolStripMenuItem";
+            this.rotateToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.rotateToolStripMenuItem.Text = "Rotate";
+            this.rotateToolStripMenuItem.Click += new System.EventHandler(this.rotate_Click);
+            // 
+            // toolStripTextBox5
+            // 
+            this.toolStripTextBox5.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toolStripTextBox5.Name = "toolStripTextBox5";
+            this.toolStripTextBox5.Size = new System.Drawing.Size(100, 27);
+            this.toolStripTextBox5.Text = "90";
+            // 
+            // normalizationToolStripMenuItem
+            // 
+            this.normalizationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.widthToolStripMenuItem,
+            this.heightToolStripMenuItem});
+            this.normalizationToolStripMenuItem.Name = "normalizationToolStripMenuItem";
+            this.normalizationToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.normalizationToolStripMenuItem.Text = "Normalization";
+            this.normalizationToolStripMenuItem.Click += new System.EventHandler(this.buttonScale_Click);
+            // 
+            // widthToolStripMenuItem
+            // 
+            this.widthToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripTextBox3});
+            this.widthToolStripMenuItem.Name = "widthToolStripMenuItem";
+            this.widthToolStripMenuItem.Size = new System.Drawing.Size(137, 26);
+            this.widthToolStripMenuItem.Text = "Width";
+            // 
+            // toolStripTextBox3
+            // 
+            this.toolStripTextBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toolStripTextBox3.Name = "toolStripTextBox3";
+            this.toolStripTextBox3.Size = new System.Drawing.Size(100, 27);
+            this.toolStripTextBox3.Text = "300";
+            // 
+            // heightToolStripMenuItem
+            // 
+            this.heightToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripTextBox4});
+            this.heightToolStripMenuItem.Name = "heightToolStripMenuItem";
+            this.heightToolStripMenuItem.Size = new System.Drawing.Size(137, 26);
+            this.heightToolStripMenuItem.Text = "Height";
+            // 
+            // toolStripTextBox4
+            // 
+            this.toolStripTextBox4.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toolStripTextBox4.Name = "toolStripTextBox4";
+            this.toolStripTextBox4.Size = new System.Drawing.Size(100, 27);
+            this.toolStripTextBox4.Text = "300";
             // 
             // menuStrip2
             // 
@@ -208,7 +286,7 @@
             this.editToolStripMenuItem});
             this.menuStrip2.Location = new System.Drawing.Point(0, 0);
             this.menuStrip2.Name = "menuStrip2";
-            this.menuStrip2.Size = new System.Drawing.Size(868, 28);
+            this.menuStrip2.Size = new System.Drawing.Size(867, 28);
             this.menuStrip2.TabIndex = 14;
             this.menuStrip2.Text = "menuStrip2";
             // 
@@ -226,62 +304,36 @@
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             // 
-            // toolStripLabel1
+            // pictureBox2
             // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(46, 22);
-            this.toolStripLabel1.Text = "State:";
-            // 
-            // toolStripProgressBar1
-            // 
-            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 22);
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel1,
-            this.toolStripProgressBar1});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 436);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(868, 25);
-            this.toolStrip1.TabIndex = 15;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // transformationToolStripMenuItem
-            // 
-            this.transformationToolStripMenuItem.Name = "transformationToolStripMenuItem";
-            this.transformationToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.transformationToolStripMenuItem.Text = "Transformation ";
-            // 
-            // normalizationToolStripMenuItem
-            // 
-            this.normalizationToolStripMenuItem.Name = "normalizationToolStripMenuItem";
-            this.normalizationToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.normalizationToolStripMenuItem.Text = "Normalization";
+            this.pictureBox2.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox2.Location = new System.Drawing.Point(12, 436);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(847, 399);
+            this.pictureBox2.TabIndex = 16;
+            this.pictureBox2.TabStop = false;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(868, 461);
-            this.Controls.Add(this.toolStrip1);
+            this.ClientSize = new System.Drawing.Size(867, 847);
+            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.menuStrip2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MZKIT_PROJECT";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip2.ResumeLayout(false);
             this.menuStrip2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -305,15 +357,20 @@
         private System.Windows.Forms.MenuStrip menuStrip2;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
-        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
-        private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
         private System.Windows.Forms.ToolStripMenuItem linearContrastingToolStripMenuItem;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox2;
         private System.Windows.Forms.ToolStripMenuItem impositionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem transformationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem normalizationToolStripMenuItem;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.ToolStripMenuItem widthToolStripMenuItem;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBox3;
+        private System.Windows.Forms.ToolStripMenuItem heightToolStripMenuItem;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBox4;
+        private System.Windows.Forms.ToolStripMenuItem scaleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rotateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBox5;
     }
 }
 

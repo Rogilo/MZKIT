@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
+using AForge.Imaging.Filters;
 using AForge.Video;
 using AForge.Video.DirectShow;
 
@@ -15,6 +17,8 @@ namespace Laba1
         public string OutputFileName = "";
         int rad;
         float brightness;
+        int w_b;
+        int h_b;
         public Form1()
         {
             InitializeComponent();
@@ -76,6 +80,7 @@ namespace Laba1
         private void clear_Click(object sender, EventArgs e)
         {
             pictureBox1.Image = null;
+            pictureBox2.Image = null;
         }
         private void savePicture_Click(object sender, EventArgs e)
         {
@@ -119,9 +124,6 @@ namespace Laba1
                 Bitmap my_bitmap = (Bitmap)pictureBox1.Image;
                 int w_b = my_bitmap.Width;
                 int h_b = my_bitmap.Height;
-
-                toolStripProgressBar1.Step = 1;
-                toolStripProgressBar1.Maximum = w_b * h_b;
                 try
                 {
                     rad = System.Convert.ToInt32(toolStripTextBox1.Text);
@@ -136,13 +138,10 @@ namespace Laba1
                     for (int y = rad + 1; y < h_b - rad; y++)
                     {
                         Median_filter(my_bitmap, x, y);
-                        toolStripProgressBar1.PerformStep();
-
                     }
 
                 }
-                pictureBox1.Refresh();
-                toolStripProgressBar1.Value = 0;
+                pictureBox2.Image = my_bitmap;
             }
             else MessageBox.Show("Picture not found!");
         }
@@ -159,7 +158,7 @@ namespace Laba1
                     brightness = 1;
                 }
                 Bitmap my_bitmap = (Bitmap)pictureBox1.Image;
-                pictureBox1.Image = LinearContrasting(my_bitmap);
+                pictureBox2.Image = LinearContrasting(my_bitmap);
             }
             else MessageBox.Show("Picture not found!");
         }
@@ -170,22 +169,46 @@ namespace Laba1
                 OpenBmpDialog();
                 Bitmap OverlayBitmap = (Bitmap)Bitmap.FromFile(InputFileName);
                 Bitmap TargetBitmap = (Bitmap)pictureBox1.Image;
-                pictureBox1.Image = Imposition(TargetBitmap, OverlayBitmap);
+                pictureBox2.Image = Imposition(TargetBitmap, OverlayBitmap);
             }
             else MessageBox.Show("Picture not found!");
         }
-      /*  private void buttonScale_Click(object sender, EventArgs e)
+        private void buttonScale_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
             {
-                pictureBoxAffineOut.SizeMode = PictureBoxSizeMode.CenterImage;
-                filter = new ResizeBicubic(trackBarHalf.Value, trackBarWidth.Value);
-                pictureBoxAffineOut.Image = filter.Apply(AForge.Imaging.Image.Clone(
-                (Bitmap)pictureBoxAffineIn.Image, PixelFormat.Format24bppRgb));
+                try
+                {
+                    w_b = System.Convert.ToInt32(toolStripTextBox3.Text);
+                    h_b = System.Convert.ToInt32(toolStripTextBox4.Text);
+                }
+                catch
+                {
+                    w_b = 847;
+                    h_b = 399;
+                }
+                Bitmap my_bitmap = (Bitmap)pictureBox1.Image;
+                pictureBox2.Image = ResizeImage(my_bitmap,w_b,h_b);
             }
             else MessageBox.Show("Picture not found!");
-        }*/
-
+        }
+        private void rotate_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                try
+                {
+                    rad = System.Convert.ToInt32(toolStripTextBox5.Text);
+                }
+                catch
+                {
+                    rad = 90;
+                }
+                Bitmap my_bitmap = (Bitmap)pictureBox1.Image;
+                pictureBox2.Image = RotateImage(my_bitmap, rad);
+            }
+            else MessageBox.Show("Picture not found!");
+        }
         private void SavePicture()
         {
             SaveFileDialog save = new SaveFileDialog();
@@ -245,7 +268,45 @@ namespace Laba1
             OutputFileName = save.FileName;
         }
 
+        private Bitmap RotateImage(Image sourceImage, int rad)
+        {
+            var rotateImage = new Bitmap(sourceImage.Width, sourceImage.Height);
+            rotateImage.SetResolution(sourceImage.HorizontalResolution, sourceImage.VerticalResolution);
+            using (Graphics gdi = Graphics.FromImage(rotateImage))
+            {
+                //Rotate the image
+                gdi.TranslateTransform((float)sourceImage.Width / 2, (float)sourceImage.Height / 2);
+                gdi.RotateTransform(rad);
+                gdi.TranslateTransform(-(float)sourceImage.Width / 2, -(float)sourceImage.Height / 2);
+                gdi.DrawImage(sourceImage, new System.Drawing.Point(0, 0));
+            }
 
+            return rotateImage;
+        }
+        private Bitmap ResizeImage(Image image, int width, int height)
+        {
+            var destRect = new Rectangle(0, 0, width, height);
+            var destImage = new Bitmap(width, height);
+
+            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+            using (var graphics = Graphics.FromImage(destImage))
+            {
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                using (var wrapMode = new ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                }
+            }
+
+            return destImage;
+        }
         private void BmpToTxt(Image image)
         {
             string stringPartOfColor;
@@ -418,4 +479,5 @@ namespace Laba1
             return ResultBitmap;
         }
     }
+
 }
