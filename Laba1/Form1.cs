@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
-using AForge.Imaging.Filters;
 using AForge.Video;
 using AForge.Video.DirectShow;
 
@@ -25,6 +23,27 @@ namespace Laba1
         private VideoCaptureDevice FinalFrame;
         private bool IsStart = false;
 
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DialogResult dialog = MessageBox.Show(
+             "Are you sure you want to quit the program? ",
+              "End of the program",
+             MessageBoxButtons.YesNo,
+             MessageBoxIcon.Warning
+            );
+            if (dialog == DialogResult.Yes)
+            {
+                if (IsStart)
+                {
+                    FinalFrame.Stop();
+                }
+                e.Cancel = false;
+            }
+            else
+            {
+                e.Cancel = true;
+            }
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
             CaptureDevice = new FilterInfoCollection(FilterCategory.VideoInputDevice);
@@ -35,7 +54,6 @@ namespace Laba1
             comboBox1.SelectedIndex = 0;
             FinalFrame = new VideoCaptureDevice();
         }
-
         private void startStop_Click(object sender, EventArgs e)
         {
             if (!IsStart)
@@ -67,7 +85,6 @@ namespace Laba1
             }
             else MessageBox.Show("Picture not found!");
         }
-
         private void OpenFile_Click(object sender, EventArgs e)
         {
             openFileDialog1.Filter = "Bitmap Image|*.bmp|Gif Image|*.gif|Png Image|*.png|JPeg Image|*.jpg";
@@ -77,65 +94,6 @@ namespace Laba1
             {
                 pictureBox1.Image = Image.FromFile(@openFileDialog1.FileName);
             }
-        }
-
-        private void SavePicture()
-        {
-            SaveFileDialog save = new SaveFileDialog();
-            save.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
-            save.Title = "Save file .bmp";
-            save.DefaultExt = ".bmp";
-            save.Filter = "File BMP|*.bmp";
-            save.ShowDialog();
-            OutputFileName = save.FileName;
-            pictureBox1.Image.Save(OutputFileName, ImageFormat.Bmp);
-
-        }
-        private void OpenTxtDialog()
-        {
-            OpenFileDialog open = new OpenFileDialog();
-            open.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
-            open.Title = "Select a file .txt";
-            open.Multiselect = false;
-            open.DefaultExt = ".txt";
-            open.Filter = "File TXT|*.txt";
-            open.FilterIndex = 0;
-            open.ShowDialog();
-            InputFileName = open.FileName;
-        }
-        private void OpenBmpDialog()
-        {
-            OpenFileDialog open = new OpenFileDialog();
-            open.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
-            open.Title = "Select a file .BMP";
-            open.Multiselect = false;
-            open.DefaultExt = ".bmp";
-            open.Filter = "Bitmap Image|*.bmp|Gif Image|*.gif|Png Image|*.png|JPeg Image|*.jpg";
-            open.FilterIndex = 0;
-            open.ShowDialog();
-            InputFileName = open.FileName;
-
-        }
-        private void SaveBmpDialog()
-        {
-            SaveFileDialog save = new SaveFileDialog();
-            save.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
-            save.Title = "Save file .bmp";
-            save.DefaultExt = ".bmp";
-            save.Filter = "File BMP|*.bmp";
-            save.ShowDialog();
-
-            OutputFileName = save.FileName;
-        }
-        private void SaveTxtDialog()
-        {
-            SaveFileDialog save = new SaveFileDialog();
-            save.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
-            save.Title = "Save file .txt";
-            save.DefaultExt = ".txt";
-            save.Filter = "File TXT|*.txt";
-            save.ShowDialog();
-            OutputFileName = save.FileName;
         }
         private void toTxt_Click(object sender, EventArgs e)
         {
@@ -153,66 +111,6 @@ namespace Laba1
             pictureBox1.Image = image;
             BmpToTxt(pictureBox1.Image);
         }
-        private void BmpToTxt(Image image)
-        {
-            string stringPartOfColor;
-            Cursor = Cursors.WaitCursor;
-            using (Bitmap bmp = new Bitmap(image))
-            {
-                using (StreamWriter sw = new StreamWriter(OutputFileName, false, System.Text.Encoding.Default))
-                {
-                    sw.WriteLine(bmp.Width);
-                    sw.WriteLine(bmp.Height);
-
-                    for (int y = 0; y < bmp.Height; y++)
-                    {
-                        for (int x = 0; x < bmp.Width; x++)
-                        {
-                            Color pxl = bmp.GetPixel(x, y);
-                            stringPartOfColor = Convert.ToString(pxl.R, 2).PadLeft(8, '0');
-                            sw.WriteLine(stringPartOfColor);
-                            stringPartOfColor = Convert.ToString(pxl.G, 2).PadLeft(8, '0');
-                            sw.WriteLine(stringPartOfColor);
-                            stringPartOfColor = Convert.ToString(pxl.B, 2).PadLeft(8, '0');
-                            sw.WriteLine(stringPartOfColor);
-                        }
-                    }
-                    sw.Close();
-                }
-            }
-            Cursor = Cursors.Default;
-        }
-        private void TxtToBmp()
-        {
-            Cursor = Cursors.WaitCursor;
-            Stream imageStream = new MemoryStream();
-            int width, height;
-            int r, g, b;
-
-            using (StreamReader sr = new StreamReader(InputFileName, System.Text.Encoding.Default))
-            {
-                width = Convert.ToInt16(sr.ReadLine());
-                height = Convert.ToInt16(sr.ReadLine());
-                using (Bitmap bmp = new Bitmap(width, height))
-                {
-                    for (int y = 0; y < bmp.Height; y++)
-                    {
-                        for (int x = 0; x < bmp.Width; x++)
-                        {
-                            r = Convert.ToInt32(sr.ReadLine(), 2);
-                            g = Convert.ToInt32(sr.ReadLine(), 2);
-                            b = Convert.ToInt32(sr.ReadLine(), 2);
-                            bmp.SetPixel(x, y, Color.FromArgb(r, g, b));
-                        }
-                    }
-                    bmp.Save(OutputFileName, System.Drawing.Imaging.ImageFormat.Bmp);
-                }
-                sr.Close();
-            }
-            Cursor = Cursors.Default;
-
-        }
-
         private void MedianFiltering_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
@@ -275,6 +173,137 @@ namespace Laba1
                 pictureBox1.Image = Imposition(TargetBitmap, OverlayBitmap);
             }
             else MessageBox.Show("Picture not found!");
+        }
+      /*  private void buttonScale_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                pictureBoxAffineOut.SizeMode = PictureBoxSizeMode.CenterImage;
+                filter = new ResizeBicubic(trackBarHalf.Value, trackBarWidth.Value);
+                pictureBoxAffineOut.Image = filter.Apply(AForge.Imaging.Image.Clone(
+                (Bitmap)pictureBoxAffineIn.Image, PixelFormat.Format24bppRgb));
+            }
+            else MessageBox.Show("Picture not found!");
+        }*/
+
+        private void SavePicture()
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
+            save.Title = "Save file .bmp";
+            save.DefaultExt = ".bmp";
+            save.Filter = "File BMP|*.bmp";
+            save.ShowDialog();
+            OutputFileName = save.FileName;
+            pictureBox1.Image.Save(OutputFileName, ImageFormat.Bmp);
+
+        }
+        private void OpenTxtDialog()
+        {
+            OpenFileDialog open = new OpenFileDialog();
+            open.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
+            open.Title = "Select a file .txt";
+            open.Multiselect = false;
+            open.DefaultExt = ".txt";
+            open.Filter = "File TXT|*.txt";
+            open.FilterIndex = 0;
+            open.ShowDialog();
+            InputFileName = open.FileName;
+        }
+        private void OpenBmpDialog()
+        {
+            OpenFileDialog open = new OpenFileDialog();
+            open.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
+            open.Title = "Select a file .BMP";
+            open.Multiselect = false;
+            open.DefaultExt = ".bmp";
+            open.Filter = "Bitmap Image|*.bmp|Gif Image|*.gif|Png Image|*.png|JPeg Image|*.jpg";
+            open.FilterIndex = 0;
+            open.ShowDialog();
+            InputFileName = open.FileName;
+
+        }
+        private void SaveBmpDialog()
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
+            save.Title = "Save file .bmp";
+            save.DefaultExt = ".bmp";
+            save.Filter = "File BMP|*.bmp";
+            save.ShowDialog();
+
+            OutputFileName = save.FileName;
+        }
+        private void SaveTxtDialog()
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
+            save.Title = "Save file .txt";
+            save.DefaultExt = ".txt";
+            save.Filter = "File TXT|*.txt";
+            save.ShowDialog();
+            OutputFileName = save.FileName;
+        }
+
+
+        private void BmpToTxt(Image image)
+        {
+            string stringPartOfColor;
+            Cursor = Cursors.WaitCursor;
+            using (Bitmap bmp = new Bitmap(image))
+            {
+                using (StreamWriter sw = new StreamWriter(OutputFileName, false, System.Text.Encoding.Default))
+                {
+                    sw.WriteLine(bmp.Width);
+                    sw.WriteLine(bmp.Height);
+
+                    for (int y = 0; y < bmp.Height; y++)
+                    {
+                        for (int x = 0; x < bmp.Width; x++)
+                        {
+                            Color pxl = bmp.GetPixel(x, y);
+                            stringPartOfColor = Convert.ToString(pxl.R, 2).PadLeft(8, '0');
+                            sw.WriteLine(stringPartOfColor);
+                            stringPartOfColor = Convert.ToString(pxl.G, 2).PadLeft(8, '0');
+                            sw.WriteLine(stringPartOfColor);
+                            stringPartOfColor = Convert.ToString(pxl.B, 2).PadLeft(8, '0');
+                            sw.WriteLine(stringPartOfColor);
+                        }
+                    }
+                    sw.Close();
+                }
+            }
+            Cursor = Cursors.Default;
+        }
+        private void TxtToBmp()
+        {
+            Cursor = Cursors.WaitCursor;
+            Stream imageStream = new MemoryStream();
+            int width, height;
+            int r, g, b;
+
+            using (StreamReader sr = new StreamReader(InputFileName, System.Text.Encoding.Default))
+            {
+                width = Convert.ToInt16(sr.ReadLine());
+                height = Convert.ToInt16(sr.ReadLine());
+                using (Bitmap bmp = new Bitmap(width, height))
+                {
+                    for (int y = 0; y < bmp.Height; y++)
+                    {
+                        for (int x = 0; x < bmp.Width; x++)
+                        {
+                            r = Convert.ToInt32(sr.ReadLine(), 2);
+                            g = Convert.ToInt32(sr.ReadLine(), 2);
+                            b = Convert.ToInt32(sr.ReadLine(), 2);
+                            bmp.SetPixel(x, y, Color.FromArgb(r, g, b));
+                        }
+                    }
+                    bmp.Save(OutputFileName, System.Drawing.Imaging.ImageFormat.Bmp);
+                }
+                sr.Close();
+            }
+            Cursor = Cursors.Default;
+
         }
         private void Median_filter(Bitmap my_bitmap, int x, int y)
         {
@@ -388,7 +417,5 @@ namespace Laba1
                 (TargetBitmap.Height - OverlayBitmap.Height) / 2,OverlayBitmap.Width, OverlayBitmap.Height);
             return ResultBitmap;
         }
-
-
     }
 }

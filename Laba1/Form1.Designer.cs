@@ -45,13 +45,15 @@
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.linearContrastingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
+            this.impositionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.impositionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.transformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.normalizationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -121,7 +123,9 @@
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.convertToolStripMenuItem,
-            this.filterToolStripMenuItem});
+            this.filterToolStripMenuItem,
+            this.transformationToolStripMenuItem,
+            this.normalizationToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(49, 24);
             this.editToolStripMenuItem.Text = "Edit";
@@ -164,7 +168,7 @@
             this.useMedianFilterToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripTextBox1});
             this.useMedianFilterToolStripMenuItem.Name = "useMedianFilterToolStripMenuItem";
-            this.useMedianFilterToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.useMedianFilterToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
             this.useMedianFilterToolStripMenuItem.Text = "Median filter";
             this.useMedianFilterToolStripMenuItem.Click += new System.EventHandler(this.MedianFiltering_Click);
             // 
@@ -179,7 +183,7 @@
             this.linearContrastingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripTextBox2});
             this.linearContrastingToolStripMenuItem.Name = "linearContrastingToolStripMenuItem";
-            this.linearContrastingToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.linearContrastingToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
             this.linearContrastingToolStripMenuItem.Text = "Linear Contrasting";
             this.linearContrastingToolStripMenuItem.Click += new System.EventHandler(this.LinearContrasting_Click);
             // 
@@ -188,6 +192,13 @@
             this.toolStripTextBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBox2.Name = "toolStripTextBox2";
             this.toolStripTextBox2.Size = new System.Drawing.Size(100, 27);
+            // 
+            // impositionToolStripMenuItem
+            // 
+            this.impositionToolStripMenuItem.Name = "impositionToolStripMenuItem";
+            this.impositionToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
+            this.impositionToolStripMenuItem.Text = "Imposition";
+            this.impositionToolStripMenuItem.Click += new System.EventHandler(this.Imposition_Click);
             // 
             // menuStrip2
             // 
@@ -239,12 +250,17 @@
             this.toolStrip1.TabIndex = 15;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // impositionToolStripMenuItem
+            // transformationToolStripMenuItem
             // 
-            this.impositionToolStripMenuItem.Name = "impositionToolStripMenuItem";
-            this.impositionToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.impositionToolStripMenuItem.Text = "Imposition";
-            this.impositionToolStripMenuItem.Click += new System.EventHandler(this.Imposition_Click);
+            this.transformationToolStripMenuItem.Name = "transformationToolStripMenuItem";
+            this.transformationToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.transformationToolStripMenuItem.Text = "Transformation ";
+            // 
+            // normalizationToolStripMenuItem
+            // 
+            this.normalizationToolStripMenuItem.Name = "normalizationToolStripMenuItem";
+            this.normalizationToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.normalizationToolStripMenuItem.Text = "Normalization";
             // 
             // Form1
             // 
@@ -259,6 +275,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "MZKIT_PROJECT";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip2.ResumeLayout(false);
             this.menuStrip2.PerformLayout();
@@ -295,6 +312,8 @@
         private System.Windows.Forms.ToolStripMenuItem linearContrastingToolStripMenuItem;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox2;
         private System.Windows.Forms.ToolStripMenuItem impositionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem transformationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem normalizationToolStripMenuItem;
     }
 }
 
