@@ -150,14 +150,14 @@
             // totxtToolStripMenuItem
             // 
             this.totxtToolStripMenuItem.Name = "totxtToolStripMenuItem";
-            this.totxtToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.totxtToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
             this.totxtToolStripMenuItem.Text = "From .txt to .bmp";
             this.totxtToolStripMenuItem.Click += new System.EventHandler(this.toTxt_Click);
             // 
             // tobmpToolStripMenuItem
             // 
             this.tobmpToolStripMenuItem.Name = "tobmpToolStripMenuItem";
-            this.tobmpToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.tobmpToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
             this.tobmpToolStripMenuItem.Text = "From .bmp to .txt";
             this.tobmpToolStripMenuItem.Click += new System.EventHandler(this.toBmp_Click);
             // 
@@ -201,7 +201,7 @@
             this.toolStripTextBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBox2.Name = "toolStripTextBox2";
             this.toolStripTextBox2.Size = new System.Drawing.Size(100, 27);
-            this.toolStripTextBox2.Text = "1";
+            this.toolStripTextBox2.Text = "2";
             // 
             // impositionToolStripMenuItem
             // 
@@ -224,7 +224,7 @@
             this.rotateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripTextBox5});
             this.rotateToolStripMenuItem.Name = "rotateToolStripMenuItem";
-            this.rotateToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.rotateToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
             this.rotateToolStripMenuItem.Text = "Rotate";
             this.rotateToolStripMenuItem.Click += new System.EventHandler(this.rotate_Click);
             // 
@@ -238,7 +238,7 @@
             // parallelTransferToolStripMenuItem
             // 
             this.parallelTransferToolStripMenuItem.Name = "parallelTransferToolStripMenuItem";
-            this.parallelTransferToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.parallelTransferToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
             this.parallelTransferToolStripMenuItem.Text = "Parallel Transfer";
             this.parallelTransferToolStripMenuItem.Click += new System.EventHandler(this.ParalelTransformation_Click);
             // 
@@ -257,7 +257,7 @@
             this.widthToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripTextBox3});
             this.widthToolStripMenuItem.Name = "widthToolStripMenuItem";
-            this.widthToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.widthToolStripMenuItem.Size = new System.Drawing.Size(137, 26);
             this.widthToolStripMenuItem.Text = "Width";
             // 
             // toolStripTextBox3
@@ -272,7 +272,7 @@
             this.heightToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripTextBox4});
             this.heightToolStripMenuItem.Name = "heightToolStripMenuItem";
-            this.heightToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.heightToolStripMenuItem.Size = new System.Drawing.Size(137, 26);
             this.heightToolStripMenuItem.Text = "Height";
             // 
             // toolStripTextBox4

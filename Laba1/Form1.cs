@@ -13,13 +13,13 @@ namespace Laba1
 {
     public partial class Form1 : Form
     {
-        public string InputFileName = "";
-        public string OutputFileName = "";
-        int rad;
-        float brightness;
+        public string InputFileName = "";  // Змінна для вхідного зображення
+        public string OutputFileName = ""; // Змінна для вихідного зображення
+        int rad;  // Змінна для параметру зглажування
+        float brightness; // Змінна для параметру контрастування
         int w_b;
         int h_b;
-        private Point mousePos1;
+        private Point mousePos1; // позиція мишки для паралельного перенесення
         private Point mousePos2;
         private DraggedFragment draggedFragment;
         public Form1()
@@ -30,18 +30,18 @@ namespace Laba1
         private VideoCaptureDevice FinalFrame;
         private bool IsStart = false;
 
-        private void pbImage_MouseMove(object sender, MouseEventArgs e)
+        private void pbImage_MouseMove(object sender, MouseEventArgs e) // реакція  на рух мишки
         {
             if (e.Button == MouseButtons.Left)
             {
-                //юзер тянет фрагмент?
+                //юзер тягне фрагмент?
                 if (draggedFragment != null)
                 {
-                    //сдвигаем фрагмент
+                    //зміщуємо фрагмент
                     draggedFragment.Location.Offset(e.Location.X - mousePos2.X, e.Location.Y - mousePos2.Y);
                     mousePos1 = e.Location;
                 }
-                //сдвигаем выделенную область
+                //зміщуємо вибрану область
                 mousePos2 = e.Location;
                 pictureBox2.Invalidate();
             }
@@ -49,34 +49,34 @@ namespace Laba1
             {
                 mousePos1 = mousePos2 = e.Location;
             }
-        }
-        private void pbImage_MouseDown(object sender, MouseEventArgs e)
+        } 
+        private void pbImage_MouseDown(object sender, MouseEventArgs e) // реакція на те шо мишка відпущена
         {
-            //юзер кликнул мышью мимо фрагмента?
+            //юзер натиснув мишкою мимо фрагменту?
             if (draggedFragment != null && !draggedFragment.Rect.Contains(e.Location))
             {
-                //уничтожаем фрагмент
+                //знищуємо фрагмент
                 draggedFragment = null;
                 pictureBox2.Invalidate();
             }
         }
         private void pbImage_MouseUp(object sender, MouseEventArgs e)
         {
-            //пользователь выделил фрагмент и отпустил мышь?
+            //юзер виділив фрамент і відпустив мишку?
             if (mousePos1 != mousePos2)
             {
-                //создаем DraggedFragment
+                //створюємо DraggedFragment
                 var rect = GetRect(mousePos1, mousePos2);
                 draggedFragment = new DraggedFragment() { SourceRect = rect, Location = rect.Location };
             }
             else
             {
-                //пользователь сдвинул фрагмент и отпутил мышь?
+                //користувач перемістив фрагмент і відпустив мишку?
                 if (draggedFragment != null)
                 {
-                    //фиксируем изменения в исходном изображении
+                    //фіксуємо зміни в боксі
                     draggedFragment.Fix(pictureBox2.Image);
-                    //уничтожаем фрагмент
+                    //знищуємо фрагмент
                     draggedFragment = null;
                     mousePos1 = mousePos2 = e.Location;
                 }
@@ -85,30 +85,30 @@ namespace Laba1
         }
         private void pbImage_Paint(object sender, PaintEventArgs e)
         {
-            //если есть сдвигаемый фрагмент
+            //якщо існує виділений фрагмент
             if (draggedFragment != null)
             {
-                //рисуем выеразанное белое место
+                //заміняємо виділене місце білим кольором
                 e.Graphics.SetClip(draggedFragment.SourceRect);
                 e.Graphics.Clear(Color.White);
 
-                //рисуем сдвинутый фрагмент
+                //малюємо виділений фрагмент
                 e.Graphics.SetClip(draggedFragment.Rect);
                 e.Graphics.DrawImage(pictureBox2.Image, draggedFragment.Location.X - draggedFragment.SourceRect.X, draggedFragment.Location.Y - draggedFragment.SourceRect.Y);
 
-                //рисуем рамку
+                //малюємо рамку
                 e.Graphics.ResetClip();
                 ControlPaint.DrawFocusRectangle(e.Graphics, draggedFragment.Rect);
             }
             else
             {
-                //если выделена область
+                //якщо виділена область
                 if (mousePos1 != mousePos2)
                     ControlPaint.DrawFocusRectangle(e.Graphics, GetRect(mousePos1, mousePos2));//рисуем рамку
             }
         }
 
-        Rectangle GetRect(Point p1, Point p2)
+        Rectangle GetRect(Point p1, Point p2) // отримуємо координати фрагменту
         {
             var x1 = Math.Min(p1.X, p2.X);
             var x2 = Math.Max(p1.X, p2.X);
@@ -136,7 +136,7 @@ namespace Laba1
             {
                 e.Cancel = true;
             }
-        }
+        } // реакція на закриття програми
         private void Form1_Load(object sender, EventArgs e)
         {
             CaptureDevice = new FilterInfoCollection(FilterCategory.VideoInputDevice);
@@ -146,11 +146,11 @@ namespace Laba1
             }
             comboBox1.SelectedIndex = 0;
             FinalFrame = new VideoCaptureDevice();
-        }
+        } // реакція на запуск програми
         private void ParalelTransformation_Click(object sender, EventArgs e)
         {
             pictureBox2.Image = pictureBox1.Image;
-        }
+        } // переносимо зображення з box1 в box2
         private void startStop_Click(object sender, EventArgs e)
         {
             if (!IsStart)
@@ -165,16 +165,16 @@ namespace Laba1
                 IsStart = !IsStart;
                 FinalFrame.Stop();
             }
-        }
+        } // почати запис з відеокамери
         private void FinalFrame_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
             pictureBox1.Image = (Bitmap)eventArgs.Frame.Clone();
-        }
+        } // зберігаємо зображення в box1
         private void clear_Click(object sender, EventArgs e)
         {
             pictureBox1.Image = null;
             pictureBox2.Image = null;
-        }
+        } // очищуємо bo1 та bo2
         private void savePicture_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
@@ -182,7 +182,7 @@ namespace Laba1
                 SavePicture();
             }
             else MessageBox.Show("Picture not found!");
-        }
+        } // збереження зображення з box1
         private void OpenFile_Click(object sender, EventArgs e)
         {
             openFileDialog1.Filter = "Bitmap Image|*.bmp|Gif Image|*.gif|Png Image|*.png|JPeg Image|*.jpg";
@@ -192,7 +192,7 @@ namespace Laba1
             {
                 pictureBox1.Image = Image.FromFile(@openFileDialog1.FileName);
             }
-        }
+        } // відкриття файлу зображення та занесення його в box1 
         private void toTxt_Click(object sender, EventArgs e)
         {
             OpenTxtDialog();
@@ -200,7 +200,7 @@ namespace Laba1
             TxtToBmp();
             Image image = Image.FromFile(OutputFileName);
             pictureBox1.Image = image;
-        }
+        } // конвертація зображення в txt формат
         private void toBmp_Click(object sender, EventArgs e)
         {
             OpenBmpDialog();
@@ -208,10 +208,10 @@ namespace Laba1
             Image image = Image.FromFile(InputFileName);
             pictureBox1.Image = image;
             BmpToTxt(pictureBox1.Image);
-        }
+        } // конвертація зображення в bmp формат
         private void MedianFiltering_Click(object sender, EventArgs e)
         {
-            if (pictureBox1.Image != null)
+            if (pictureBox1.Image != null) // перевіряємо чи в box1 присутнє зображення
             {
 
                 Bitmap my_bitmap = (Bitmap)pictureBox1.Image;
@@ -219,7 +219,7 @@ namespace Laba1
                 int h_b = my_bitmap.Height;
                 try
                 {
-                    rad = System.Convert.ToInt32(toolStripTextBox1.Text);
+                    rad = System.Convert.ToInt32(toolStripTextBox1.Text); 
                 }
                 catch
                 {
@@ -237,7 +237,7 @@ namespace Laba1
                 pictureBox2.Image = my_bitmap;
             }
             else MessageBox.Show("Picture not found!");
-        }
+        } // медіанна фільтрація
         private void LinearContrasting_Click(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
@@ -248,7 +248,7 @@ namespace Laba1
                 }
                 catch
                 {
-                    brightness = 1;
+                    brightness = 2;
                 }
                 Bitmap my_bitmap = (Bitmap)pictureBox1.Image;
                 pictureBox2.Image = LinearContrasting(my_bitmap);
@@ -570,7 +570,6 @@ namespace Laba1
                 (TargetBitmap.Height - OverlayBitmap.Height) / 2, OverlayBitmap.Width, OverlayBitmap.Height);
             return ResultBitmap;
         }
-
 
     }
 }
